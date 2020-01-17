@@ -16,34 +16,32 @@ First, we have the total counts of `Make` and `Miss` by year. The years were fil
 
 !['image1'](Resources/sr_close_ts_count.png)
 
-Next, we pulled the Make and Miss percentages by year.
+Next, we pulled the `Make` and `Miss` percentages by year.
 
 !['image2'](Resources/sr_close_ts_percent.png)
 
-Below is the summary statistics for the difference between SR Close TS and SR Create TS.
+Below is the summary statistics for the difference between `SR Close TS` and `SR Create TS`.
 
 !['image3'](Resources/sr_close_ts_stats.png)
 
 ## Data Analysis (Using `SR Create TS`)
 The previous data analysis was done with the same parameters on the report. However, in this one we will filter the data using the case creation date rather than the closure date. This should provide a better idea of performance to date.
 
-First, total counts of Make and Miss by year.
+First, total counts of `Make` and `Miss` by year.
 
 !['image4'](Resources/sr_create_ts_count.png)
 
-Next, Make and Miss percentages by year.
+Next, `Make` and `Miss` percentages by year.
 
 !['image5'](Resources/sr_create_ts_percent.png)
 
-Below is the summary statistics for the difference between SR Close TS and SR Create TS.
+Below is the summary statistics for the difference between `SR Close TS` and `SR Create TS`.
 
 !['image6'](Resources/sr_create_ts_stats.png)
 
 ## Observations from the Data
 * The max value for 2020 is over 152 days when we filter by closure date. Filtering by open date we get a more realistic result at 12 days. The 152 day old case was examined and we noticed that it was actioned by the call center on the same day that it was created, but the closure was delayed due to the depot losing the machine and finally closing the case earlier this year.
 * By using the open date for 2020, the mean KPI drops about 2.30 days.
-
-
 
 ## Limitations of the Report
 * By default this report measures *all* available data regardless of case age. Therefore the KPI reflects *all* cases since the reporting tool started capturing data. This is the number shown in the dashboard.
