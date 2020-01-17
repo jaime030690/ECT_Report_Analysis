@@ -1,0 +1,8 @@
+Data pull date: 2020-01-16
+
+Sample size:
+
+Population size: 23563
+Confidence level: 95%
+Margin of Error: 5%
+Ideal sample size: 378
