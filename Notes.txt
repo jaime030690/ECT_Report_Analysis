@@ -13,6 +13,7 @@ Random sample of n size was retrieved from the report dated 2020-01-16.
 Checking cases in OCPM, looking for timestamp of CQ.
 When agents complete work OCPM automatically will CQ the case to a holding queue.
 This is the best indicator to show when a case has been completed by the call center.
+A few cases had one offs, these were handled manually.
 
 Work log
 ==========
