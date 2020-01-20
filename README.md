@@ -3,45 +3,69 @@
 Quoting the description on the report home page:
 >"Average time in days it takes for a Customers issue to be resolved measured from the day the Customer contacts the Call Center and a Service Order is opened unitl the case status is moved to closed. Calculation includes FOD, CRU, On-Site and Depot Service Orders."
 
-The SLA goal is 5.60 days.
+The SLA for ECT is 5.60 days.
 
-## Method for KPI Calculation
-The report performs a simple calculation to determine whether or not a case met the SLA. If the case is open for less than 5.60 days then it is marked as a `Make`; otherwise it will be a `Miss`. This calculation is performed by subtracting the values in columns `SR Close TS` and `SR Create TS`.
+## Definitions
+* RC: Received, time and date when a case is created by either a customer or electronically.
+* CX: Closure, time and date when a case is closed. This is triggered when all work is completed on a case.
+* CQ: Change Queue, time and date when a case is actioned by the call center.
 
-The KPI for this metric is calculated by the mean value of the subtraction of `SR Close TS` and `SR Create TS` for each row in the data set.
+## Method for ECT Calculation
+ECT is calculated by the mean of the subtraction of `SR Close TS` and `SR Create TS` for each row in the data set. This is equivalent to finding the difference in the timestamps between a `CX` (close) and `RC` (receive).
 
-## Data Analysis (Using `SR Close TS`, mirrors reporting tool)
-We pulled all data from the ECT Report portal and ran an analysis on the data set. The formula used by the ECT Report was replicated. This was confirmed by duplicating the results for the means.
-First, we have the total counts of `Make` and `Miss` by year. The years were filtered by looking at the `SR Close TS` date.
+## Hypothesis
+The ECT SLA has not been met since June 2019. The number was 12.3 at the time the analysis was made. Management believes that CET could be affected by factors outside of the control of CGS. Using `CX` as a factor for determining ECT is misleading as the call center has little control when this event will be triggered. A better measure of work done by the call center would be by measuring time between `CQ` and `RC`. The `CQ` event is triggered when the agent is ready to launch a case for service. At that point the case leaves the realm of the call center and is transferred to the field for actioning. Various factors might affected how long a case remains open afterward.
 
-!['image1'](Resources/sr_close_ts_count.png)
+## Data Set
+The data set was retrieved from the IBM Control Tower. This data kept the default view, no adjustments were made to the dates or any filters applied. This initial data set was used to perform the analysis. This report was retrieved on 2020-01-16.
 
-Next, we pulled the `Make` and `Miss` percentages by year.
+## Method
+First we attempted to replicate the observed ECT from IBM Control Tower. This was done by adding a column for `CX and RC Difference` on the original data set. In this column we calculated the difference for all data points. The calculated mean was 12.3 which was the same as the reported ECT in the IBM Control Tower. Below are the statistics of the complete data set. The table header indicates the calculation method for the numbers described.
 
-!['image2'](Resources/sr_close_ts_percent.png)
+### Data Set Statistics
+|       |CX - RC|
+|-------|-------|
+|Data points|23,563|
+|Mean (ECT)|12.30|
+|Stdev|10.78|
+|Q1|4.11|
+|Q2|8.75|
+|Q3|18.11|
 
-Below is the summary statistics for the difference between `SR Close TS` and `SR Create TS`.
+Two random sample data sets were taken from the initial data set. Each sample data set had a total of 378 data points. This number of samples provides us with a 95.00% confidence interval for the results with a margin of error of 5.00%.
 
-!['image3'](Resources/sr_close_ts_stats.png)
+The variables we needed were `RC`, `CX`, and `CQ`. The first two were given on the report. The `CQ` variable was not. It had to be retrieved from each case through OCPM. To aid with data mining a Python program was created to retrieve the `CQ` timestamp from the case. In the scenario that the `CQ` did not occur (Canada cases) or occurred multiple times, a manual check was done to determine the timestamp.
 
-## Data Analysis (Using `SR Create TS`)
-The previous data analysis was done with the same parameters on the report. However, in this one we will filter the data using the case creation date rather than the closure date. This should provide a better idea of performance to date.
+Once all `CQ` values were retrieved each sample data set had two columns added were the differences were calculated.
+* `CX and RC Difference`
+* `CQ and RC Difference`
 
-First, total counts of `Make` and `Miss` by year.
+## Results
+Below are the observed results from each sample data set. It should be noted that the reported means have a 5.00% margin of error. The headers of the tables indicate the method used to calculate the numbers.
 
-!['image4'](Resources/sr_create_ts_count.png)
+### Data Sample 1 Statistics
+|       |CX - RC|CQ - RC|
+|-------|-------|-------|
+|Data points|378|378|
+|Mean (ECT)|12.46|0.48|
+|Stdev|10.76|2.05|
+|Q1|4.14|0.00|
+|Q2|8.11|0.03|
+|Q3|18.14|0.51|
 
-Next, `Make` and `Miss` percentages by year.
+### Data Sample 2 Statistics
+|       |CX - RC|CQ - RC|
+|-------|-------|-------|
+|Data points|378|378|
+|Mean (ECT)|11.02|0.48|
+|Stdev|9.41|1.42|
+|Q1|4.16|0.01|
+|Q2|8.11|0.02|
+|Q3|18.16|0.47|
 
-!['image5'](Resources/sr_create_ts_percent.png)
+## Discussion
 
-Below is the summary statistics for the difference between `SR Close TS` and `SR Create TS`.
-
-!['image6'](Resources/sr_create_ts_stats.png)
-
-## Observations from the Data
-* The max value for 2020 is over 152 days when we filter by closure date. Filtering by open date we get a more realistic result at 12 days. The 152 day old case was examined and we noticed that it was actioned by the call center on the same day that it was created, but the closure was delayed due to the depot losing the machine and finally closing the case earlier this year.
-* By using the open date for 2020, the mean KPI drops about 2.30 days.
+The 
 
 ## Limitations of the Report
 * By default this report measures *all* available data regardless of case age. Therefore the KPI reflects *all* cases since the reporting tool started capturing data. This is the number shown in the dashboard.
