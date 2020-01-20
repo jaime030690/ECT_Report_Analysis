@@ -65,18 +65,9 @@ Below are the observed results from each sample data set. It should be noted tha
 
 ## Discussion
 
-The 
+The results for `CX - RC` in Data Sample 1 and Data Sample 2 closely predict the results observed in the main data set, with Data Sample 1 being the most accurate. Due this correlation we can infer therefore that the results in the `CQ - RC` column accurately predict the trend in the main data set if this method was used to calculate ECT.
 
-## Limitations of the Report
-* By default this report measures *all* available data regardless of case age. Therefore the KPI reflects *all* cases since the reporting tool started capturing data. This is the number shown in the dashboard.
-* The column `SR Close TS` has the value of the case's final closure date. This value is not reflective of the performance of the call center as this event is triggered when all work on the case is completed (CX status). A few examples for possible delays outside of the call center's control:
-    * Limited part availability.
-    * Customer delaying service (additional information needed, not available).
-    * Technician not available to service machine.
-    * Machine lost in transit.
-    * Carrier unable to deliver a part.
-* Changing the date range on the report filters the data by the values in the `SR Close TS` column. For example, we may pick all cases YTD for our values, and the report will pull cases which were opened prior to the current year if the `SR Close TS` value is on the current year.
-* There is no true indicator of call center performance in the data columns. The best indicator would be the time when the first action plan (AP) is placed on a case. This metric is not available as of writing this report.
-* Using `SR Close TS` as the date filter instead of `SR Open TS` is misleading. It doesn’t reflect monthly performance as it captures cases that were opened prior to the current month.
+We observed that an adjusted ECT using the `CQ - RC` method would be 0.48 days with a margin of error of 5.00%.
+
 ## Conclusion
-The ECT Report does not serve as an objective measure of the performance of the call center due to its inherent limitations. The case closure time is the determinant factor into whether the KPIs are met. This number is not reflective of the actions performed by the call center. A better measure would be the first AP time on the case. Delays in the field can cause cases to remain open and for the closure time to be delayed indefinitely.
+The ECT Report as it stands now is not an objective measure of the performance of the call center, but it serves as an overview of the entire operation from time that a call is intially screened to the time that a case is closed by the field. The hypothesis is proven as extraneous factors have an effect on the length of time that a case will remain open. These factors might be attributed to delays in parts, customer or technician availability, and shipping delays.
