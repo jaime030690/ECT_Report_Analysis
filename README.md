@@ -1,7 +1,7 @@
 # ECT Report Analysis
 ## Description of ECT Report
 Quoting the description on the report home page:
->"Average time in days it takes for a Customers issue to be resolved measured from the day the Customer contacts the Call Center and a Service Order is opened unitl the case status is moved to closed. Calculation includes FOD, CRU, On-Site and Depot Service Orders."
+>"Average time in days it takes for a Customers issue to be resolved measured from the day the Customer contacts the Call Center and a Service Order is opened until the case status is moved to closed. Calculation includes FOD, CRU, On-Site and Depot Service Orders."
 
 The SLA for ECT is 5.60 days.
 
